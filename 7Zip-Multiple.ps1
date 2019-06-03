@@ -1,6 +1,6 @@
-##########################################################################
-# Powershell utility for zipping multiple folders using 7-zip.
-# Useful for creating multiple SCORM PIFs at once.
+###############################################################################
+# Windows Powershell utility for zipping multiple folders using 7-zip.
+# NOTE: This utility expects 7z.exe to be installed at C:\Program Files\7-zip\
 #
 # Usage is:
 # 7Zip-Multiple [[-Src ]<Src>] [[-Dest ]<Dest>] [-ZipInPlace]
@@ -38,7 +38,7 @@
 #   directory and places the zip files into C:\dir2.
 #
 # Created by Steve Dinkle 2019-06-02
-##########################################################################
+###############################################################################
 
 # Establish input parameters.
 param
