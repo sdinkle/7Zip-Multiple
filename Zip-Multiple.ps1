@@ -1,9 +1,8 @@
-###############################################################################
-# Windows Powershell utility for zipping multiple folders using 7-zip.
-# NOTE: This utility expects 7z.exe to be installed at C:\Program Files\7-zip\
+﻿##################################################################################
+# Windows Powershell utility for zipping multiple folders.
 #
 # Usage is:
-# 7Zip-Multiple [[-Src ]<Src>] [[-Dest ]<Dest>] [-ZipInPlace]
+# Zip-Multiple [[-Src ]<Src>] [[-Dest ]<Dest>] [-ZipInPlace] [-Use7Zip]
 # 
 # Input parameters:
 # - Src
@@ -23,29 +22,35 @@
 #   The ZipInPlace switch tells the utility to place the zipped files in 
 #   the Src directory. It overrides the Dest parameter if present.
 #
+# - Use7Zip
+#   Uses 7-zip to compress files instead of default Windows compression.
+#   NOTE: This utility expects 7z.exe to be installed at C:\Program Files\7-zip\
+#
 # Examples:
-# - 7Zip-Multiple
+# - Zip-Multiple
 #   Compresses the contents of each folder located in the current
 #   directory and places the zip files into a folder called _zipped in the
 #   current directory.
 #
-# - 7Zip-Multiple dir1 -ZipInPlace
+# - Zip-Multiple dir1 -ZipInPlace
 #   Compresses the contents of each folder located in a folder called
 #   dir1 inside the current directory and places the zip files into dir1.
 #
-# - 7Zip-Multiple -Dest C:\dir2
+# - Zip-Multiple -Dest C:\dir2 -Use7Zip
 #   Compresses the contents of each folder located in the current
-#   directory and places the zip files into C:\dir2.
+#   directory and places the zip files into C:\dir2. Use 7-zip for compression.
 #
 # Created by Steve Dinkle 2019-06-02
-###############################################################################
+# Last updated 2019-06-10
+##################################################################################
 
 # Establish input parameters.
 param
 (
     [string]$Src = ".",
     [string]$Dest = ($Src+"\_zipped"),
-    [switch]$ZipInPlace
+    [switch]$ZipInPlace,
+    [switch]$Use7Zip
 )
 
 # Set the destination to the source folder if the -ZipInPlace switch is present.
@@ -55,7 +60,7 @@ if ($ZipInPlace) {
 
 # Test to see if 7-zip is installed at the expected location.
 $7z = "C:\Program Files\7-zip\7z.exe"
-if ((Test-Path "C:\Program Files\7-Zip\7z.exe") -ne "True") {
+if ($Use7Zip -and ((Test-Path "C:\Program Files\7-Zip\7z.exe") -ne "True")) {
     Write-Output "Please verify that 7z.exe exists at C:\Program Files\7-zip\"
     exit
 }
@@ -97,5 +102,9 @@ foreach ($item in $Subfolders) {
     }
 
     # Zip the file and store it in the target directory.
-    & $7z a -tzip ($Target) ($SrcPath+"\"+$item+"\*") ("-x!"+$DestName)
+    if ($Use7Zip) {
+        & $7z a -tzip ($Target) ($SrcPath+"\"+$item+"\*") ("-x!"+$DestName)
+    } else {
+        Compress-Archive ($SrcPath+"\"+$item+"\*") $Target -Verbose
+    }
 }
