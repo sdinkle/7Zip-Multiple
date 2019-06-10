@@ -1,5 +1,5 @@
 # Windows Powershell utility for zipping multiple folders.
-Usage is: `7Zip-Multiple [[-Src ]<Src>] [[-Dest ]<Dest>] [-ZipInPlace] [-Use7Zip]`
+Usage is: `Zip-Multiple [[-Src ]<Src>] [[-Dest ]<Dest>] [-ZipInPlace] [-Use7Zip]`
 
 #### Input parameters:
 - `Src`
@@ -22,13 +22,13 @@ Usage is: `7Zip-Multiple [[-Src ]<Src>] [[-Dest ]<Dest>] [-ZipInPlace] [-Use7Zip
   - **NOTE:** This utility expects `7z.exe` to be installed at `C:\Program Files\7-zip\`
 
 #### Examples:
-- `7Zip-Multiple`
+- `Zip-Multiple`
   - Compresses the contents of each folder located in the current directory and places the zip files into a folder called `_zipped` in the current directory.
 
-- `7Zip-Multiple dir1 -ZipInPlace`
+- `Zip-Multiple dir1 -ZipInPlace`
   - Compresses the contents of each folder located in a folder called `dir1` inside the current directory and places the zip files into `dir1`.
 
-- `7Zip-Multiple -Dest C:\dir2 -Use7Zip`
+- `Zip-Multiple -Dest C:\dir2 -Use7Zip`
   - Compresses the contents of each folder located in the current directory and places the zip files into `C:\dir2`. Use 7-zip for compression.
 ---
 Created by Steve Dinkle 2019-06-02
