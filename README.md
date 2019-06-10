@@ -32,4 +32,5 @@ Usage is: `7Zip-Multiple [[-Src ]<Src>] [[-Dest ]<Dest>] [-ZipInPlace] [-Use7Zip
   - Compresses the contents of each folder located in the current directory and places the zip files into `C:\dir2`. Use 7-zip for compression.
 ---
 Created by Steve Dinkle 2019-06-02
+
 Last updated 2019-06-10
